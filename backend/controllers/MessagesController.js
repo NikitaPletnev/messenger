@@ -1,15 +1,14 @@
-import Channel from "../types/Channel.js";
-import ChannelService from "../services/ChannelService.js";
+import MessagesService from "../services/MessagesService.js";
 
-class ChannelController {
+class MessagesController {
     async create(req, res) {
         try {
-            const newChannel = req.body;
-            const channel = await ChannelService.create(newChannel, req?.files?.picture);
+            const newMessages = req.body;
+            const Messages = await MessagesService.create(newMessages, req?.files?.picture);
             return res.status(200).json({
                 success: true,
-                message: "Channel Created!",
-                channel
+                message: "Messages Created!",
+                Messages
             });
         }catch (e) {
             return res.status(500).json({
@@ -19,12 +18,13 @@ class ChannelController {
         }
     }
 
-    async getAll(req, res) {
+    async getByChannel(req, res) {
+        const {id} = req.params;
         try {
-            const channels = await ChannelService.getAll();
+            const messages = await MessagesService.getByChannel(id);
             return res.status(200).json({
                 success: true,
-                channels
+                messages
             });
         }catch (e) {
             return res.status(500).json({
@@ -36,12 +36,12 @@ class ChannelController {
 
     async edit(req, res) {
         try {
-            const channel  = req.body;
-            const updatedChannel = await ChannelService.edit(channel._id, channel);
+            const Messages  = req.body;
+            const updatedMessages = await MessagesService.edit(Messages._id, Messages);
 
             return res.status(200).json({
                 success: true,
-                updatedChannel
+                updatedMessages
             });
         }catch (e) {
             return res.status(500).json({
@@ -54,10 +54,10 @@ class ChannelController {
     async delete(req, res) {
         try {
             const {id} = req.params;
-            const channel = await ChannelService.delete(id);
+            const Messages = await MessagesService.delete(id);
             return res.status(200).json({
                 success: true,
-                channel
+                Messages
             });
         }catch (e) {
             return res.status(500).json({
@@ -69,4 +69,4 @@ class ChannelController {
 }
 
 
-export default new ChannelController();
+export default new MessagesController();

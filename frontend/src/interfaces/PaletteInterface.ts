@@ -5,6 +5,10 @@ export interface PaletteInterface {
 
 interface ColorPackInterface {
     mainBg: string;
+    mainBgRgba: string;
+    textFieldBackground: string;
+    textColor: string;
+    titleColor: string;
     themeButtonColor: string;
     yellow: string;
     blue: string;
