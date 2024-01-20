@@ -1,7 +1,8 @@
 export interface UserInterface {
-    name: string;
+    _id: string;
+    username: string;
     email: string;
     password: string;
     role: string;
-    avatar: string;
+    avatar?: string;
 }

@@ -21,6 +21,10 @@ class UserService {
             username: user.username, password: user.password
         });
     }
+
+    async getAll() {
+        return User.find();
+    }
 }
 
 export default new UserService();

@@ -1,11 +1,14 @@
 import {AlertColor, Box, styled} from "@mui/material";
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import StyledSnackBar from "../../components/StyledSnackBar";
+import StyledSnackBar from "../../components/DS/StyledSnackBar";
 import {palette} from "../../configs/palette";
 import {checkUser} from "../../helpers/api/checkUser";
+import {registerUser} from "../../helpers/api/registerUser";
 import {StoreInterface} from "../../interfaces/StoreInterface";
 import loginBackground from "../../assets/loginBackground.png";
+import {UserInterface} from "../../interfaces/UserInterface";
+import {setUser} from "../../store/actions/setUser";
 import LoginPageFields from "./LoginPageFilelds";
 
 const LoginPageContainer = styled("main")({
@@ -28,8 +31,6 @@ const LoginPageItemContainer = styled(Box)({
     }
 });
 
-
-
 const LoginPage = ():JSX.Element => {
     
     const theme = useSelector((state: StoreInterface) => state.theme);
@@ -41,11 +42,11 @@ const LoginPage = ():JSX.Element => {
     
     const handleSignIn = (username: string, password: string):void => {
         checkUser(username, password).then((response) => {
-            response.json().then((resource: {success: boolean, users: any[], message:string}) => {
+            response.json().then((resource: {success: boolean, users: UserInterface[], message:string}) => {
                 if(resource.success){
-                    console.log(resource?.users[0]);
                     setSnackBar("success");
                     setSnackBarText("Welcome " + resource?.users[0].username + " !");
+                    dispatch(setUser(resource?.users[0]));
                 }else{
                     setSnackBar("error");
                     setSnackBarText(resource.message);
@@ -58,10 +59,21 @@ const LoginPage = ():JSX.Element => {
     };
     
     const handleSignUp = (username: string, password: string, email?: string, avatar?: File):void => {
-        console.log(username);
-        console.log(password);
-        console.log(email);
-        console.log(avatar);
+        registerUser(username, password, "user", email, avatar).then((response) => {
+            response.json().then((resource: {success: boolean, user: UserInterface, message:string}) => {
+                if(resource.success){
+                    setSnackBar("success");
+                    setSnackBarText("Welcome " + resource?.user.username + " !");
+                    dispatch(setUser(resource?.user));
+                }else{
+                    setSnackBar("error");
+                    setSnackBarText(resource.message);
+                }
+            });
+        }).catch((e) => {
+            setSnackBar("error");
+            setSnackBarText(e.message);
+        });
     };
     
     return <LoginPageContainer sx={{
@@ -72,7 +84,7 @@ const LoginPage = ():JSX.Element => {
                 background: `url(${loginBackground}) no-repeat center`
             }}
         >
-            <LoginPageFields handleSignIn={handleSignIn}/>
+            <LoginPageFields handleSignIn={handleSignIn} handleSignUp={handleSignUp}/>
         </LoginPageItemContainer>
         <StyledSnackBar
             type={snackBar}

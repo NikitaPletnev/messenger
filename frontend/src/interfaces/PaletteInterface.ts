@@ -12,4 +12,7 @@ interface ColorPackInterface {
     themeButtonColor: string;
     yellow: string;
     blue: string;
+    red: string;
+    headingBg: string;
+    dropdownBg: string;
 }

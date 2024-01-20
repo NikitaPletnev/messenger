@@ -10,6 +10,9 @@ export const palette: PaletteInterface = {
         titleColor: "#545a6d",
         yellow: "#f1b44c",
         blue: "#556ee6",
+        red: "#FD405E",
+        headingBg: "#2a3042",
+        dropdownBg: "#FFF"
     },
     dark: {
         mainBg: "rgb(34, 39, 54)",
@@ -20,5 +23,8 @@ export const palette: PaletteInterface = {
         titleColor: "#f6f6f6",
         yellow: "#f1b44c",
         blue: "#556ee6",
+        red: "#FD405E",
+        headingBg: "#556ee6",
+        dropdownBg: "#2a3042"
     }
 };

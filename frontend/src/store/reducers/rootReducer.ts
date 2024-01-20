@@ -1,4 +1,4 @@
-import {THEME, USER,} from "../actions/types/actionTypes";
+import {LOADING, THEME, USER,} from "../actions/types/actionTypes";
 import { initialState } from "../initialState";
 // eslint-disable-next-line
 export const rootReducer = (state = initialState, action: any) => {
@@ -12,6 +12,11 @@ export const rootReducer = (state = initialState, action: any) => {
         return Object.assign({
         }, state, {
             theme: action.theme,
+        });
+    case LOADING:
+        return Object.assign({
+        }, state, {
+            loading: action.loading,
         });
     default:
         return state;
