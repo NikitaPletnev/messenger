@@ -1,8 +1,9 @@
-import {styled} from "@mui/material";
+import {Box, styled} from "@mui/material";
 import React from "react";
 import {useSelector} from "react-redux";
 import {palette} from "../../configs/palette";
 import {StoreInterface} from "../../interfaces/StoreInterface";
+import Channels from "./Channels/Channels";
 import Header from "./Header/Header";
 
 const MainContainer = styled("main")({
@@ -15,6 +16,13 @@ const MainContainer = styled("main")({
     }
 });
 
+const MainMessengerContainer = styled(Box)({
+    display: "grid",
+    height: "calc(100% - 70px)",
+    gridTemplateColumns: "1fr 2fr",
+    padding: "0 10%",
+});
+
 const Main = ():JSX.Element => {
     
     const theme = useSelector((state: StoreInterface) => state.theme);
@@ -25,6 +33,9 @@ const Main = ():JSX.Element => {
         }}
     >
         <Header/>
+        <MainMessengerContainer>
+            <Channels/>
+        </MainMessengerContainer>
     </MainContainer>;
 };
 

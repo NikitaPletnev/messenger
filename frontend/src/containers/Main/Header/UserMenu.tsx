@@ -5,6 +5,7 @@ import {BASE_URL_IMG} from "../../../configs/apiConfig";
 import {palette} from "../../../configs/palette";
 import {StoreInterface} from "../../../interfaces/StoreInterface";
 import LogoutIcon from "@mui/icons-material/Logout";
+import {setChannels} from "../../../store/actions/setChannels";
 import {setUser} from "../../../store/actions/setUser";
 
 const UserMenuAvatar = styled(Box)({
@@ -43,13 +44,14 @@ const UserMenu = ():JSX.Element => {
     
     const handleLogOut = ():void => {
         dispatch(setUser(null));
+        dispatch(setChannels([]));
     };
     
     return (
         <Box>
             <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
                 <UserMenuAvatar sx={{
-                    background: user.avatar ? `url(${BASE_URL_IMG+user.avatar}) no-repeat center` : palette[theme].mainBgRgba,
+                    background: (user.avatar ? `url(${BASE_URL_IMG+user.avatar}) no-repeat center` : palette[theme].textColor) + ` ${palette[theme].textColor}`,
                     backgroundSize: "cover",
                 }}/>
             </IconButton>

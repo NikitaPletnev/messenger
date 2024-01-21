@@ -9,18 +9,12 @@ class ChannelService {
         });
     }
 
-    async getAll() {
-        return Channel.find();
-    }
-
-    async edit(id, editedChannel) {
-        if(!id || !editedChannel){
-            throw new Error("ID Undefined!");
-        }
-
-        return Channel.findByIdAndUpdate(id, editedChannel, {
-            new: true
-        });
+    async getChannelsByUserId(id) {
+        return Channel.find({
+            "users": {
+                "$regex": id, "$options": "i"
+            }
+        },);
     }
 
     async delete(id) {

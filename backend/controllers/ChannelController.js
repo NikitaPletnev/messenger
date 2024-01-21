@@ -19,29 +19,13 @@ class ChannelController {
         }
     }
 
-    async getAll(req, res) {
+    async getChannelsByUserId(req, res) {
+        const {id} = req.body;
         try {
-            const channels = await ChannelService.getAll();
+            const channels = await ChannelService.getChannelsByUserId(id);
             return res.status(200).json({
                 success: true,
                 channels
-            });
-        }catch (e) {
-            return res.status(500).json({
-                success: false,
-                message: e.toString(),
-            });
-        }
-    }
-
-    async edit(req, res) {
-        try {
-            const channel  = req.body;
-            const updatedChannel = await ChannelService.edit(channel._id, channel);
-
-            return res.status(200).json({
-                success: true,
-                updatedChannel
             });
         }catch (e) {
             return res.status(500).json({

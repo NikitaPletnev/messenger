@@ -7,12 +7,14 @@ export const palette: PaletteInterface = {
         textFieldBackground: "#f3f3f9",
         textColor: "#212529",
         themeButtonColor: "#f3f3f9",
-        titleColor: "#545a6d",
+        titleColor: "#0c0f13",
         yellow: "#f1b44c",
         blue: "#556ee6",
         red: "#FD405E",
-        headingBg: "#2a3042",
-        dropdownBg: "#FFF"
+        headingBg: "#8196c6",
+        dropdownBg: "#FFF",
+        backgroundColorScroll: "#626291",
+        borderColor: " rgba(0, 0, 0, 0.15)"
     },
     dark: {
         mainBg: "rgb(34, 39, 54)",
@@ -25,6 +27,8 @@ export const palette: PaletteInterface = {
         blue: "#556ee6",
         red: "#FD405E",
         headingBg: "#556ee6",
-        dropdownBg: "#2a3042"
+        dropdownBg: "#2a3042",
+        backgroundColorScroll: "#626291",
+        borderColor: "#32394e"
     }
 };

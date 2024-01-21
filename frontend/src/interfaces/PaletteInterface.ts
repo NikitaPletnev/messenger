@@ -15,4 +15,6 @@ interface ColorPackInterface {
     red: string;
     headingBg: string;
     dropdownBg: string;
+    backgroundColorScroll: string;
+    borderColor: string;
 }

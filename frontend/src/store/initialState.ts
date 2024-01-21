@@ -6,4 +6,7 @@ export const initialState: StoreInterface = {
         : null,
     theme: (localStorage.getItem("theme") ? (localStorage.getItem("theme") || "light") : "light") as "light" | "dark",
     loading: false,
+    channels:  localStorage.getItem("channels")
+        ? JSON.parse(localStorage.getItem("channels") as string)
+        : [],
 };
