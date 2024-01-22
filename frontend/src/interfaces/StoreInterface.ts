@@ -6,4 +6,5 @@ export interface StoreInterface {
     theme: "light" | "dark";
     loading: boolean;
     channels: ChannelInterface[];
+    selectedChannel: string;
 }

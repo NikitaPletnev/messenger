@@ -9,6 +9,8 @@ import {getChannels} from "../../../helpers/api/getChannels";
 import {ChannelInterface} from "../../../interfaces/ChannelInterface";
 import {StoreInterface} from "../../../interfaces/StoreInterface";
 import {setChannels} from "../../../store/actions/setChannels";
+import {setLoading} from "../../../store/actions/setLoading";
+import {setSelectedChannel} from "../../../store/actions/setSelectdChannel";
 import AddChannelEl from "./AddChannelEl";
 import ChannelEl from "./ChannelEl";
 
@@ -53,6 +55,8 @@ const Channels = ():JSX.Element => {
     
     const channels = useSelector((state: StoreInterface) => state.channels);
     
+    const selectedChannel = useSelector((state: StoreInterface) => state.selectedChannel);
+    
     const dispatch = useDispatch();
     
     const [snackBar, setSnackBar] = useState<AlertColor | undefined>();
@@ -68,6 +72,7 @@ const Channels = ():JSX.Element => {
                         setSnackBar("error");
                         setSnackBarText(resource.message);
                     }
+                    dispatch(setLoading(false));
                 });
             }).catch((e) => {
                 setSnackBar("error");
@@ -94,13 +99,21 @@ const Channels = ():JSX.Element => {
         });
     };
     
+    const handleSelectChannel = (id: string):void => {
+        if(selectedChannel === id){
+            dispatch(setSelectedChannel(""));
+        }else{
+            dispatch(setSelectedChannel(id));
+        }
+    };
+    
     const renderChannels = ():React.ReactNode => {
         return (
             <>
                 <AddChannelEl/>
                 <ChannelsItems>
                     {channels.map((opt, index) => {
-                        return <ChannelEl data={opt} key={"channel_" + index} handleSelect={console.log} handleDelete={handleDeleteChannel}/>;
+                        return <ChannelEl data={opt} key={"channel_" + index} handleSelect={handleSelectChannel} handleDelete={handleDeleteChannel}/>;
                     })}
                 </ChannelsItems>
             </>

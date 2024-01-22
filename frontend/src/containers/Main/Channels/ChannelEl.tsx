@@ -1,6 +1,7 @@
 import {Box, IconButton, styled} from "@mui/material";
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
+import {OwlIcon2} from "../../../assets/OwlIcon2";
 import StyledTypography from "../../../components/DS/StyledTypography";
 import {BASE_URL_IMG} from "../../../configs/apiConfig";
 import {palette} from "../../../configs/palette";
@@ -17,6 +18,7 @@ interface ChannelElInterface {
 
 const ChannelElContainer = styled(Box)({
     position: "relative",
+    cursor: "pointer",
     height: "100px",
     width: "100%",
     padding: "10px",
@@ -28,6 +30,13 @@ const ChannelElContainer = styled(Box)({
     alignItems: "center",
     gap: "20px",
     textAlign: "start",
+    "&.selected":{
+        backgroundSize: "40% 100% , cover",
+        backgroundPosition: "100% 0, 0 20%",
+        "&:hover":{
+            backgroundPosition: "120% 0, 0 40%",
+        },
+    }
 });
 
 const ChannelElContainerUnderText = styled("p")({
@@ -50,6 +59,8 @@ const ChannelEl = ({data, handleSelect, handleDelete}: ChannelElInterface):JSX.E
     
     const theme = useSelector((state: StoreInterface) => state.theme);
     
+    const selectedChannel = useSelector((state: StoreInterface) => state.selectedChannel);
+    
     const [deleteButton, setDeleteButton] = useState<boolean>(false);
     
     const onDelete = (e: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement> ):void => {
@@ -62,17 +73,19 @@ const ChannelEl = ({data, handleSelect, handleDelete}: ChannelElInterface):JSX.E
             onMouseOver={() => setDeleteButton(true)}
             onMouseOut={() => setDeleteButton(false)}
             onClick={() => handleSelect(data._id)}
+            className={selectedChannel === data._id ? "selected" : ""}
             sx={{
                 backgroundImage: `linear-gradient(45deg, transparent, ${palette[theme].blue}), url(${BASE_URL_IMG+data.avatar})`,
                 backgroundSize: "150% 100% , cover",
                 backgroundPosition: "100% 0, 0 0",
+                backgroundRepeat: "no-repeat, no-repeat",
                 "&:hover":{
                     backgroundPosition: "20% 0, 0 10%",
                 },
                 borderBottom: "2px solid" + palette[theme].borderColor
             }}
         >
-            <MarkAsUnreadIcon fontSize="large"  htmlColor={palette[theme].blue}/>
+            {selectedChannel === data._id ? <OwlIcon2 color={palette[theme].blue} />  : <MarkAsUnreadIcon fontSize="large" htmlColor={palette[theme].blue}/>}
             <Box>
                 <StyledTypography variant={"h6"}
                     style={{

@@ -30,6 +30,10 @@ const StyledTextField = ({...props}: TextFieldProps):JSX.Element => {
                 color:  palette[theme].textColor,
                 background: palette[theme].textFieldBackground,
             },
+            "& textarea":{
+                color:  palette[theme].textColor,
+                background: palette[theme].textFieldBackground,
+            },
             "&:after":{
                 display: props.required ? "block" : "none",
                 content: "'*'",

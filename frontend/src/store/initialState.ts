@@ -9,4 +9,5 @@ export const initialState: StoreInterface = {
     channels:  localStorage.getItem("channels")
         ? JSON.parse(localStorage.getItem("channels") as string)
         : [],
+    selectedChannel: "",
 };

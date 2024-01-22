@@ -12,13 +12,15 @@ const Message = mongoose.Schema({
     },
     dateTime: {
         type: String,
+        required: true,
     },
     content: {
         type: String,
         required: true,
     },
-    media: {
-        type: String
+    edited: {
+        type: Boolean,
+        required: true,
     }
 });
 
