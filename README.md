@@ -2,6 +2,10 @@
 
 ## Backend
 
+First of all you need to install dependencies 
+
+### `npm i`
+
 For start backend server you should select directory "backend" and open it in terminal
 
 then you have two scripts 
@@ -31,6 +35,10 @@ because I think that storing the database in the project itself would be too con
 works just quickly and without huge SQL queries. 
 
 ## Frontend 
+
+First of all you need to install dependencies 
+
+### `npm i`
 
 For start UI of application you should select folder "frontend" in your terminal
 
