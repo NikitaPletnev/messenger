@@ -9,7 +9,6 @@ import {ChannelInterface} from "../../../interfaces/ChannelInterface";
 import {StoreInterface} from "../../../interfaces/StoreInterface";
 import AddIcon from "@mui/icons-material/Add";
 import {setChannels} from "../../../store/actions/setChannels";
-import {setSelectedChannel} from "../../../store/actions/setSelectdChannel";
 import AddChannelModal from "./AddChannelModal";
 
 const AddChannelElContainer = styled(Button)({
@@ -51,7 +50,6 @@ const AddChannelEl = ():JSX.Element => {
             response.json().then((resource: {success: boolean,channel: ChannelInterface, message:string}) => {
                 if(resource.success){
                     dispatch(setChannels([...channels, resource.channel]));
-                    dispatch(setSelectedChannel(resource.channel._id));
                     setOpenModal(false);
                     setSnackBar("success");
                     setSnackBarText("New Channel Created!");

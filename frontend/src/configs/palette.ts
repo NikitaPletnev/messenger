@@ -11,10 +11,12 @@ export const palette: PaletteInterface = {
         yellow: "#f1b44c",
         blue: "#556ee6",
         red: "#FD405E",
+        indigo: "#564ab1",
         headingBg: "#8196c6",
         dropdownBg: "#FFF",
         backgroundColorScroll: "#626291",
-        borderColor: " rgba(0, 0, 0, 0.15)"
+        borderColor: "rgba(0, 0, 0, 0.15)",
+        messageBg: "#d3d3d6",
     },
     dark: {
         mainBg: "rgb(34, 39, 54)",
@@ -26,9 +28,11 @@ export const palette: PaletteInterface = {
         yellow: "#f1b44c",
         blue: "#556ee6",
         red: "#FD405E",
+        indigo: "#564ab1",
         headingBg: "#556ee6",
         dropdownBg: "#2a3042",
         backgroundColorScroll: "#626291",
-        borderColor: "#32394e"
+        borderColor: "#32394e",
+        messageBg: "#32394e",
     }
 };

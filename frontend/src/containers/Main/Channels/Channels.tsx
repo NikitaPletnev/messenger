@@ -6,10 +6,13 @@ import StyledTypography from "../../../components/DS/StyledTypography";
 import {palette} from "../../../configs/palette";
 import {deleteChannel} from "../../../helpers/api/deleteChannel";
 import {getChannels} from "../../../helpers/api/getChannels";
+import {getMessages} from "../../../helpers/api/getMessages";
 import {ChannelInterface} from "../../../interfaces/ChannelInterface";
+import {MessageInterface} from "../../../interfaces/MessageInterface";
 import {StoreInterface} from "../../../interfaces/StoreInterface";
 import {setChannels} from "../../../store/actions/setChannels";
 import {setLoading} from "../../../store/actions/setLoading";
+import {setMessages} from "../../../store/actions/setMessages";
 import {setSelectedChannel} from "../../../store/actions/setSelectdChannel";
 import AddChannelEl from "./AddChannelEl";
 import ChannelEl from "./ChannelEl";
@@ -104,6 +107,22 @@ const Channels = ():JSX.Element => {
             dispatch(setSelectedChannel(""));
         }else{
             dispatch(setSelectedChannel(id));
+            dispatch(setLoading(true));
+            getMessages(id).then((response) => {
+                response.json().then((resource: {success: boolean,messages: MessageInterface[], message:string}) => {
+                    if(resource.success){
+                        dispatch(setMessages(resource.messages));
+                    }else{
+                        setSnackBar("error");
+                        setSnackBarText(resource.message);
+                    }
+                    dispatch(setLoading(false));
+                });
+            }).catch((e) => {
+                setSnackBar("error");
+                setSnackBarText(e.message);
+            });
+            
         }
     };
     
@@ -124,7 +143,7 @@ const Channels = ():JSX.Element => {
     return (
         <ChannelsContainer
             sx={{
-                border: "1px solid" + palette[theme].borderColor
+                border: "1px solid" + " " + palette[theme].borderColor
             }}
         >
             <StyledTypography variant={"h5"}

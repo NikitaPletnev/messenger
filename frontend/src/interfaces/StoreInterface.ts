@@ -1,4 +1,5 @@
 import {ChannelInterface} from "./ChannelInterface";
+import {MessageInterface} from "./MessageInterface";
 import {UserInterface} from "./UserInterface";
 
 export interface StoreInterface {
@@ -7,4 +8,5 @@ export interface StoreInterface {
     loading: boolean;
     channels: ChannelInterface[];
     selectedChannel: string;
+    messages: MessageInterface[];
 }

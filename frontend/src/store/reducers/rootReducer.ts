@@ -1,4 +1,4 @@
-import {CHANNELS, LOADING, SELECTED_CHANNEL, THEME, USER,} from "../actions/types/actionTypes";
+import {CHANNELS, LOADING, MESSAGES, SELECTED_CHANNEL, THEME, USER,} from "../actions/types/actionTypes";
 import { initialState } from "../initialState";
 // eslint-disable-next-line
 export const rootReducer = (state = initialState, action: any) => {
@@ -27,6 +27,11 @@ export const rootReducer = (state = initialState, action: any) => {
         return Object.assign({
         }, state, {
             selectedChannel: action.selectedChannel,
+        });
+    case MESSAGES:
+        return Object.assign({
+        }, state, {
+            messages: action.messages,
         });
     default:
         return state;

@@ -1,27 +1,13 @@
 import Message from "../types/Message.js";
-import FileService from "./FileService.js";
 
 class MessagesService {
-    async create(message, picture) {
-        const fileName = FileService.saveFile(picture);
-        return await Message.create({
-            ...message, media: fileName
-        });
+    async create(message) {
+        return await Message.create(message);
     }
 
     async getByChannel(channelId) {
         return Message.find({
             channelId: channelId
-        });
-    }
-
-    async edit(id, editedMessages) {
-        if(!id || !editedMessages){
-            throw new Error("ID Undefined!");
-        }
-
-        return Message.findByIdAndUpdate(id, editedMessages, {
-            new: true
         });
     }
 

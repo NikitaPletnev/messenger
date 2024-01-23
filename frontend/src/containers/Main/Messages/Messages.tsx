@@ -1,13 +1,22 @@
-import {Box, IconButton, styled} from "@mui/material";
-import React, {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {AlertColor, Box, IconButton, styled} from "@mui/material";
+import React, {useEffect, useMemo, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import StyledSnackBar from "../../../components/DS/StyledSnackBar";
 import StyledTextField from "../../../components/DS/StyledTextField";
+import {deleteMessage} from "../../../helpers/api/deleteMessage";
+import {sendMessage} from "../../../helpers/api/sendMessage";
+import {getRandomColor} from "../../../helpers/utils/getRandomColor";
+import {MessageInterface} from "../../../interfaces/MessageInterface";
 import {StoreInterface} from "../../../interfaces/StoreInterface";
+import {setLoading} from "../../../store/actions/setLoading";
+import {setMessages} from "../../../store/actions/setMessages";
+import Chat from "./Chat/Chat";
 import EmptyChat from "./EmptyChat";
 import {palette} from "../../../configs/palette";
 import SendIcon from "@mui/icons-material/Send";
 
 const MessagesContainer = styled(Box)({
+    position: "relative",
     maxHeight: "100%",
     overflowY: "auto",
     overflowX: "hidden",
@@ -53,7 +62,20 @@ const Messages = ():JSX.Element => {
     
     const theme = useSelector((state: StoreInterface) => state.theme);
     
+    const user = useSelector((state: StoreInterface) => state.user);
+    
+    const messages = useSelector((state: StoreInterface) => state.messages);
+    
+    const colorPuck = useMemo(() => {
+        return  Array.from(new Set(messages.map((opt) => opt.authorName))).map((opt) => [opt, getRandomColor()]);
+    },[messages[0]]);
+    
+    const dispatch = useDispatch();
+    
     const [text, setText] = useState<string>("");
+    
+    const [snackBar, setSnackBar] = useState<AlertColor | undefined>();
+    const [snackBarText, setSnackBarText] = useState<string>("");
     
     useEffect(() => {
         if(text){
@@ -65,13 +87,57 @@ const Messages = ():JSX.Element => {
         e.preventDefault();
         e.stopPropagation();
         if(text) {
-            console.log(text);
+            sendMessage(selectedChannel, user._id, user.username, text).then((response) => {
+                response.json().then((resource: { success: boolean, Messages: MessageInterface, message: string }) => {
+                    if (resource.success) {
+                        dispatch(setMessages([...messages, resource.Messages]));
+                        setText("");
+                    } else {
+                        setSnackBar("error");
+                        setSnackBarText(resource.message);
+                    }
+                    dispatch(setLoading(false));
+                });
+            }).catch((e) => {
+                setSnackBar("error");
+                setSnackBarText(e.message);
+            });
         }
     };
     
-    const renderMessagesEls = ():React.ReactNode => {
+    const handleDeleteMessage = (messageFrom: MessageInterface):void => {
+        deleteMessage(messageFrom._id).then((response) => {
+            response.json().then((resource: { success: boolean, Messages: MessageInterface, message: string }) => {
+                if (resource.success) {
+                    dispatch(setMessages([...messages.filter((opt) => opt._id !== messageFrom._id)]));
+                    setText("");
+                } else {
+                    setSnackBar("error");
+                    setSnackBarText(resource.message);
+                }
+                dispatch(setLoading(false));
+            });
+        }).catch((e) => {
+            setSnackBar("error");
+            setSnackBarText(e.message);
+        });
+    };
+    
+    const renderButton = ():React.ReactNode => {
         return (
-            <span>ELS</span>
+            <IconButton className={text ? "active" : ""} type="submit" disabled={!text} onClick={handleSend}>
+                <SendIcon htmlColor={palette[theme].blue}/>
+            </IconButton>
+        );
+    };
+    
+    const renderMessagesEls = ():React.ReactNode => {
+        
+        return (
+            <Chat
+                handleDelete={handleDeleteMessage}
+                colorPuck={colorPuck}
+            />
         );
     };
     
@@ -85,12 +151,12 @@ const Messages = ():JSX.Element => {
                 <StyledTextField
                     type={"text"}
                     placeholder={"Message to channel..."}
-                    multiline={true} rows={5}
+                    multiline={true}
+                    rows={5}
+                    value={text}
                     onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setText(e.target.value)}
                 />
-                <IconButton className={text ? "active" : ""} type="submit" disabled={!text} onClick={handleSend}>
-                    <SendIcon htmlColor={palette[theme].blue}/>
-                </IconButton>
+                {renderButton()}
             </TextContainer>
         );
     };
@@ -114,6 +180,11 @@ const Messages = ():JSX.Element => {
     return (
         <>
             {renderContent()}
+            <StyledSnackBar
+                type={snackBar}
+                message={snackBarText}
+                handleClose={() => setSnackBar(undefined)}
+            />
         </>
     );
 };

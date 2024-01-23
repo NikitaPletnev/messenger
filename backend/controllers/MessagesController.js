@@ -4,10 +4,10 @@ class MessagesController {
     async create(req, res) {
         try {
             const newMessages = req.body;
-            const Messages = await MessagesService.create(newMessages, req?.files?.picture);
+            const Messages = await MessagesService.create(newMessages);
             return res.status(200).json({
                 success: true,
-                message: "Messages Created!",
+                message: "Message Created!",
                 Messages
             });
         }catch (e) {
@@ -25,23 +25,6 @@ class MessagesController {
             return res.status(200).json({
                 success: true,
                 messages
-            });
-        }catch (e) {
-            return res.status(500).json({
-                success: false,
-                message: e.toString(),
-            });
-        }
-    }
-
-    async edit(req, res) {
-        try {
-            const Messages  = req.body;
-            const updatedMessages = await MessagesService.edit(Messages._id, Messages);
-
-            return res.status(200).json({
-                success: true,
-                updatedMessages
             });
         }catch (e) {
             return res.status(500).json({

@@ -10,6 +10,10 @@ const Message = mongoose.Schema({
         type: String,
         required: true,
     },
+    authorName: {
+        type: String,
+        required: true,
+    },
     dateTime: {
         type: String,
         required: true,

@@ -3,3 +3,4 @@ export const THEME = "THEME";
 export const LOADING = "LOADING";
 export const CHANNELS = "CHANNELS";
 export const SELECTED_CHANNEL = "SELECTED_CHANNEL";
+export const MESSAGES = "MESSAGES";

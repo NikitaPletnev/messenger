@@ -13,8 +13,10 @@ interface ColorPackInterface {
     yellow: string;
     blue: string;
     red: string;
+    indigo: string;
     headingBg: string;
     dropdownBg: string;
     backgroundColorScroll: string;
     borderColor: string;
+    messageBg: string;
 }

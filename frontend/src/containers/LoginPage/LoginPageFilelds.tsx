@@ -24,7 +24,7 @@ const LoginPageFieldsContainer = styled(Box)({
     "& p":{
         fontSize: "15px",
         lineHeight: "133%",
-        fontHeight: 500,
+        fontWeight: 500,
     },
     "@media(max-width: 768px)":{
         width: "84%",

@@ -5,3 +5,5 @@ export const CREATE = "/user";
 export const GET_CHANNELS = "/channels";
 export const GET_USERS = "/users";
 export const CREATE_CHANNEL = "/channel";
+export const MESSAGE_SEND = "/messages";
+export const GET_MESSAGES = "/messagesByChannel";
